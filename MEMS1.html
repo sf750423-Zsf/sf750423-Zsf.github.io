@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMS微机电系统 - 全过程项目要素概要</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* 导航菜单样式 */
+        .main-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        .main-nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+        .main-nav li {
+            list-style: none;
+        }
+        .main-nav a {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .main-nav a:hover, .main-nav a.active {
+            color: #3b82f6;
+            border-bottom: 3px solid #3b82f6;
+        }
+        .main-nav i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* 内容区域样式 */
+        .content-section {
+            scroll-margin-top: 100px;
+            margin-bottom: 2.5rem;
+        }
+        
+        /* 投资计划表格样式 */
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .investment-table th, .investment-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .investment-table th {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+        }
+        .investment-table tr:last-child td {
+            border-bottom: none;
+        }
+        .investment-table tr.highlight {
+            background-color: #eff6ff;
+            font-weight: bold;
+        }
+        
+        /* SVG流程图响应式 */
+        .svg-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f9fafb;
+        }
+        .svg-container svg {
+            min-width: 100%;
+            height: auto;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-nav a {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            .main-nav i {
+                font-size: 16px;
+            }
+        }
+        
+        /* 左侧导航菜单 */
+        .sidebar-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+            display: none;
+        }
+        .sidebar-nav.active {
+            display: block;
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-nav li {
+            margin: 12px 0;
+        }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            color: #475569;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+        .sidebar-nav i {
+            font-size: 16px;
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* 图表优化 */
+        .process-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .process-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .process-step {
+            background: #3b82f6;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            min-width: 160px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .process-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 20px;
+        }
+        
+        /* 整体优化 */
+        section {
+            margin-bottom: 2.5rem;
+        }
+        h2, h3 {
+            color: #1e293b;
+        }
+        .section-title {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 1.5rem;
+        }
+        .section-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 70%;
+            width: 4px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 1024px) {
+            .sidebar-nav {
+                display: block;
+            }
+            .content-wrapper {
+                margin-left: 240px;
+                padding-left: 30px;
+                transition: margin 0.3s ease;
+            }
+            .content-wrapper.full-width {
+                margin-left: 0;
+            }
+        }
+        @media (max-width: 1023px) {
+            .process-row {
+                flex-direction: column;
+            }
+            .process-arrow {
+                transform: rotate(90deg);
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="min-h-screen">
+        <!-- 左侧导航菜单 -->
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#overview"><i class="fas fa-home"></i>概述</a></li>
+                <li><a href="#process"><i class="fas fa-cogs"></i>生产工艺</a></li>
+                <li><a href="#plan"><i class="fas fa-chart-line"></i>投资计划</a></li>
+                <li><a href="#applications"><i class="fas fa-map-marker-alt"></i>选址要求</a></li>
+                <li><a href="#advantages"><i class="fas fa-industry"></i>工艺系统</a></li>
+                <li><a href="#technology"><i class="fas fa-microchip"></i>设计技术</a></li>
+            </ul>
+        </nav>
+        
+        <!-- 回到顶部按钮 -->
+        <div class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <!-- 标题区 -->
+        <header class="gradient-bg py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 mb-4">MEMS微机电系统</h1>
+                <p class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto">全过程项目要素概要</p>
+            </div>
+            
+            <!-- 导航菜单 -->
+            <nav class="main-nav mt-10">
+                <ul>
+                    <li><a href="#overview" class="active"><i class="fas fa-home"></i> 概述</a></li>
+                    <li><a href="#process"><i class="fas fa-cogs"></i> 生产工艺</a></li>
+                    <li><a href="#plan"><i class="fas fa-chart-line"></i> 投资计划</a></li>
+                    <li><a href="#applications"><i class="fas fa-map-marker-alt"></i> 选址要求</a></li>
+                    <li><a href="#advantages"><i class="fas fa-industry"></i> 工艺系统</a></li>
+                    <li><a href="#technology"><i class="fas fa-microchip"></i> 设计、技术</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- 主要内容区 -->
+        <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- 概述卡片 -->
+            <section id="overview" class="content-section">
+                <div class="bg-white rounded-xl shadow-lg card p-6 md:p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-microchip text-blue-600 text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-800">MEMS概述</h2>
+                    </div>
+                    <div class="prose max-w-none text-slate-700">
+                        <p>MEMS（Micro-Electro-Mechanical Systems，微机电系统）是一种将微型机械元件、传感器、执行器（作动器）和电子电路集成在硅基或其他材料上的微型化系统。</p>
+                        <p class="mt-4">它的尺寸通常在微米到毫米级别，结合了机械结构与电子功能，广泛应用于消费电子、医疗、汽车、工业等领域。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 核心组成 -->
+            <section class="mb-8">
+                <h2 class="section-title text-2xl font-bold text-slate-800 mb-8">MEMS系统的核心组成</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 微型机械结构 -->
+                    <div class="bg-white rounded-xl shadow-lg card p-6">
+                        <div class="bg-purple-100 p-3 rounded-full inline-flex mb-4">
+                            <i class="fas fa-cogs text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-3">微型机械结构</h3>
+                        <p class="text-slate-600">如悬臂梁、齿轮、薄膜等，通过微加工技术（如光刻、蚀刻）制造。</p>
+                    </div>
+
+                    <!-- 传感器 -->
+                    <div class="bg-white rounded-xl shadow-lg card p-6">
+                        <div class="bg-green-100 p-3 rounded-full inline-flex mb-4">
+                            <i class="fas fa-bolt text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-3">传感器</h3>
+                        <p class="text-slate-600">检测物理量（如加速度、压力、温度）或化学信号，并将其转换为电信号。</p>
+                        <p class="text-sm text-slate-500 mt-2">例如：加速度计、陀螺仪、压力传感器。</p>
+                    </div>
+
+                    <!-- 执行器 -->
+                    <div class="bg-white rounded-xl shadow-lg card p-6">
+                        <div class="bg-yellow-100 p-3 rounded-full inline-flex mb-4">
+                            <i class="fas fa-cogs text-yellow-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-3">执行器</h3>
+                        <p class="text-slate-600">将电信号转换为机械动作，如微电机、微阀门。</p>
+                    </div>
+
+                    <!-- 电子电路 -->
+                    <div class="bg-white rounded-xl shadow-lg card p-6">
+                        <div class="bg-red-100 p-3 rounded-full inline-flex mb-4">
+                            <i class="fas fa-microchip text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-3">电子电路</h3>
+                        <p class="text-slate-600">处理信号、控制执行器或与外部系统通信。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 关键技术 -->
+            <section class="mb-8">
+                <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                    <div class="bg-slate-800 px-6 py-4">
+                        <h2 class="text-xl font-bold text-white">MEMS的关键技术</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- 微加工工艺 -->
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h3 class="text-lg font-semibold text-slate-800 mb-2">微加工工艺</h3>
+                                <p class="text-slate-600">包括体微加工（Bulk Micromachining）和表面微加工（Surface Micromachining）。</p>
+                            </div>
+
+                            <!-- 材料 -->
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h3 class="text-lg font-semibold text-slate-800 mb-2">材料</h3>
+                                <p class="text-slate-600">硅（最常用）、聚合物、金属、压电材料等。</p>
+                            </div>
+
+                            <!-- 集成技术 -->
+                            <div class="border-l-4 border-purple-500 pl-4">
+                                <h3 class="text-lg font-semibold text-slate-800 mb-2">集成技术</h3>
+                                <p class="text-slate-600">将机械结构与IC（集成电路）结合，实现智能化。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 典型应用 -->
+            <section class="mb-8">
+                <h2 class="section-title text-2xl font-bold text-slate-800 mb-8">MEMS的典型应用领域</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 消费电子 -->
+                    <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                        <div class="bg-blue-600 px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-mobile-alt text-white mr-3"></i>
+                                <h3 class="text-lg font-bold text-white">消费电子</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>智能手机中的加速度计（屏幕旋转）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>MEMS麦克风</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>陀螺仪（游戏控制）</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 汽车 -->
+                    <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                        <div class="bg-green-600 px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-car text-white mr-3"></i>
+                                <h3 class="text-lg font-bold text-white">汽车工业</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>安全气囊触发（加速度传感器）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>胎压监测（TPMS）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>ESC（电子稳定控制）</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 医疗 -->
+                    <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                        <div class="bg-purple-600 px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-heartbeat text-white mr-3"></i>
+                                <h3 class="text-lg font-bold text-white">医疗健康</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-500 mt-1 mr-2"></i>
+                                    <span>微型药物输送系统</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-500 mt-1 mr-2"></i>
+                                    <span>植入式传感器</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-500 mt-1 mr-2"></i>
+                                    <span>Lab-on-a-chip（芯片实验室）</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 工业 -->
+                    <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                        <div class="bg-yellow-600 px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-industry text-white mr-3"></i>
+                                <h3 class="text-lg font-bold text-white">工业应用</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-yellow-500 mt-1 mr-2"></i>
+                                    <span>工业自动化中的压力传感器</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-yellow-500 mt-1 mr-2"></i>
+                                    <span>惯性导航系统（MEMS IMU）</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 航空航天 -->
+                    <div class="bg-white rounded-xl shadow-lg card overflow-hidden">
+                        <div class="bg-red-600 px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-rocket text-white mr-3"></i>
+                                <h3 class="text-lg font-bold text-white">航空航天</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-2"></i>
+                                    <span>微型无人机</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-2"></i>
+                                    <span>卫星姿态控制</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MEMS优势 -->
+            <section class="mb-8">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-8 text-white">
+                        <h2 class="text-2xl font-bold mb-6">MEMS技术的核心优势</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-compress-alt mr-2"></i>
+                                    <h3 class="font-semibold">小型化</h3>
+                                </div>
+                                <p>体积小、重量轻</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-battery-three-quarters mr-2"></i>
+                                    <h3 class="font-semibold">低功耗</h3>
+                                </div>
+                                <p>适合便携设备</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-tachometer-alt mr-2"></i>
+                                    <h3 class="font-semibold">高精度</h3>
+                                </div>
+                                <p>微米级加工保证性能</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-boxes mr-2"></i>
+                                    <h3 class="font-semibold">批量生产</h3>
+                                </div>
+                                <p>类似半导体工艺，成本低</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 与传统传感器对比 -->
+            <section class="mb-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">MEMS与传统传感器的区别</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">对比项</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">传统传感器</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">MEMS传感器</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">结构</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">独立的机械或电子部件</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">机械和电子功能集成在单一芯片上</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">尺寸</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">相对较大</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">微米到毫米级别</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">集成度</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">低</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">高</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">可靠性</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">一般</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">高</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 实际案例 -->
+            <section class="mb-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">MEMS技术在实际中的应用案例</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="text-lg font-semibold text-slate-800 mb-2">智能手机的"摇一摇"功能</h3>
+                            <p class="text-slate-600">通过MEMS加速度计检测手机的晃动动作，实现交互功能。</p>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="text-lg font-semibold text-slate-800 mb-2">汽车安全气囊触发</h3>
+                            <p class="text-slate-600">依赖MEMS碰撞传感器在毫秒级检测碰撞并触发安全气囊。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 未来展望 -->
+            <section class="mb-8">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-8 text-white">
+                        <h2 class="text-2xl font-bold mb-4">MEMS技术的未来展望</h2>
+                        <p class="mb-6">随着技术的不断发展，MEMS可能应用于更前沿的领域，如微机器人或生物医学检测。</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-robot mr-2"></i>
+                                    <h3 class="font-semibold">微机器人</h3>
+                                </div>
+                                <p>用于医疗、工业检测等领域的微型机器人</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-dna mr-2"></i>
+                                    <h3 class="font-semibold">生物医学检测</h3>
+                                </div>
+                                <p>高精度的体内检测和药物输送系统</p>
+                            </div>
+                            <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-brain mr-2"></i>
+                                    <h3 class="font-semibold">智能传感网络</h3>
+                                </div>
+                                <p>构建分布式智能传感系统</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 生产工艺 - 优化后的响应式图表 -->
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">MEMS生产工艺流程</h2>
+            <section id="process" class="content-section py-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <p class="text-slate-600 mb-6">精密制造工艺确保微米级精度与可靠性</p>
+                    
+                    <div class="process-chart">
+                        <!-- 第一行 -->
+                        <div class="process-row">
+                            <div class="process-step">来料清洗</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">保护膜生成</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">结构层沉积</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">光刻图形1</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">刻蚀图形</div>
+                        </div>
+                        
+                        <!-- 第二行 -->
+                        <div class="process-row">
+                            <div class="process-step">光刻胶去除</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">表面清洗</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">绝缘层生成</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">光刻图形2</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">金属电极制作</div>
+                        </div>
+                        
+                        <!-- 第三行 -->
+                        <div class="process-row">
+                            <div class="process-step">光刻胶涂布</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">减薄工艺</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">重复光刻至减薄</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">芯片压合形成空腔</div>
+                        </div>
+                        
+                        <!-- 第四行 -->
+                        <div class="process-row">
+                            <div class="process-step">空腔联线</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">划片切割</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">打线键合</div>
+                            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="process-step">测试</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+                        <h3 class="font-semibold text-blue-800 mb-2">工艺说明：</h3>
+                        <p class="text-slate-700">MEMS生产工艺结合了半导体制造技术和微加工技术，通过多步光刻、刻蚀和沉积工艺在硅片上形成微米级结构，最终封装形成完整的MEMS器件。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 投资计划 -->
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">投资计划</h2>
+            <section id="plan" class="content-section py-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <p class="text-slate-600 mb-6">以一期中试线月产5,000片，逐步增加产能转换成二期月产20,000片为例。100亩地，一期60亩地二期40亩地。一期建设面积约为5万平方米，净化生产车间约为10,000平方米。</p>
+                    
+                    <div class="stats grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="stat-item bg-blue-50 p-4 rounded-lg text-center">
+                            <div class="stat-value text-2xl font-bold text-blue-600">5,000片</div>
+                            <div class="stat-label text-slate-600">一期月产量</div>
+                        </div>
+                        <div class="stat-item bg-green-50 p-4 rounded-lg text-center">
+                            <div class="stat-value text-2xl font-bold text-green-600">20,000片</div>
+                            <div class="stat-label text-slate-600">二期月产量</div>
+                        </div>
+                        <div class="stat-item bg-purple-50 p-4 rounded-lg text-center">
+                            <div class="stat-value text-2xl font-bold text-purple-600">100亩</div>
+                            <div class="stat-label text-slate-600">总用地面积</div>
+                        </div>
+                        <div class="stat-item bg-red-50 p-4 rounded-lg text-center">
+                            <div class="stat-value text-2xl font-bold text-red-600">10亿</div>
+                            <div class="stat-label text-slate-600">总投资</div>
+                        </div>
+                    </div>
+                    
+                    <table class="investment-table">
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>金额（亿元）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>厂房建设土建机电</td>
+                                <td>3.6</td>
+                            </tr>
+                            <tr>
+                                <td>工艺生产设备</td>
+                                <td>5.0</td>
+                            </tr>
+                            <tr>
+                                <td>生产设备定位动力配置</td>
+                                <td>0.6</td>
+                            </tr>
+                            <tr>
+                                <td>物资、流动资金与其他</td>
+                                <td>0.8</td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>合计</td>
+                                <td>10.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-sm text-slate-500 mt-2">不含土地成本及外电输入开闭所</p>
+                </div>
+            </section>
+
+            <!-- 选址要求 -->
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">选址要求</h2>
+            <section id="applications" class="content-section py-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-tint text-blue-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-semibold">自来水</span>: 供水压力不低于0.35MPa，最大用水量约3500吨/天
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bolt text-yellow-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-semibold">供电</span>: 变压器负载设计约15000KVA，双廻廻路供电
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-fire text-red-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-semibold">天然气</span>: 净热值8500Kcal/m³，压力≥0.2MPa，峰值供气量≥600M³/小时
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-wind text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-semibold">饱和蒸汽</span>: 压力0.35MPa工况下，供应量≥12吨/小时
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-shield-alt text-purple-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-semibold">防震需求</span>: 符合VC-C曲线，离高铁直线距离≥5公里
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 工艺系统需求 -->
+                <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">工艺系统需求</h2>         
+                <section id="advantages" class="content-section py-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-fan text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">空调系统</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>净化空调系统</li>
+                                <li>新风空调系统</li>
+                                <li>办公空调系统</li>
+                                <li>生产工艺排风系统</li>
+                                <li>1.热排风系统</li>
+                                <li>2.酸性排风系统</li>
+                                <li>3.碱性排风系统</li>
+                                <li>排烟系统</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-water text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">水处理系统</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>冷库水系统</li> 
+                                <li>纯水系统</li>
+                                <li>工艺设备冷却水系统</li>
+                                <li>去除微粒子树酯系统</li>
+                                <li>排水系统（生产废水、生活污水、雨水）</li>
+                                <li>消防系统</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-plug text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">能源与动力</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>空压系统</li>
+                                <li>工艺真空系统</li>
+                                <li>大宗气体供应系统</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-server text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">管理系统</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>信息、安保系统</li>
+                                <li>配电系统（含UPS电源）</li>
+                                <li>FMCS工厂动力管理系统</li>                        
+                                <li>该系统由SCADA，PLC，DDC，FMS操作控制台构成</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 技术人员配置 -->
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6">技术人员配置</h2>
+            <section id="technology" class="content-section py-8">
+                <div class="bg-white rounded-xl shadow-lg card p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-cogs text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">生产技术人员</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>产线技术人员</li>
+                                <li>中试线生产工程师</li>
+                                <li>量产产线工程师</li>
+                                <li>设备维修工程师</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-laptop-code text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">设计开发人员</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>技术开发设计工程师</li>
+                                <li>设备流程编制工程师</li>
+                                <li>产品开发工程师</li>
+                                <li>理论设计工程师</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-building text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">厂房建设人员</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>厂房兴建工程师</li>
+                                <li>建筑设计师</li>
+                                <li>结构设计工程师</li>
+                                <li>机电设计工程师</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-tasks text-blue-500 mr-3"></i>
+                                <h3 class="text-lg font-semibold">生产管理</h3>
+                            </div>
+                            <ul class="space-y-2 text-slate-700">
+                                <li>生产线安排工程师</li>
+                                <li>净化空间工程师</li>
+                                <li>工艺生产设计工程师</li>
+                                <li>全过程管理总工程师</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="bg-slate-100 py-8 px-4">
+            <div class="max-w-4xl mx-auto text-center text-slate-500 text-sm">
+                <p>江苏仲棠建设工程有限公司</p>
+                <p class="mt-1">最后更新时间为2025-09-03 ，星期三</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 导航菜单激活状态
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.content-section');
+            const navLinks = document.querySelectorAll('.main-nav a, .sidebar-nav a');
+            
+            // 左侧导航菜单固定位置
+            const sidebarNav = document.querySelector('.sidebar-nav');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                // 检测当前滚动位置对应的章节
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                // 更新导航链接激活状态
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // 显示/隐藏回到顶部按钮
+                const backToTop = document.querySelector('.back-to-top');
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            // 平滑滚动效果
+            document.querySelectorAll('.main-nav a, .sidebar-nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // 卡片悬停效果增强
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                });
+            });
+            
+            // 回到顶部按钮功能
+            const backToTop = document.querySelector('.back-to-top');
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 生产工艺步骤悬停效果
+            const processSteps = document.querySelectorAll('.process-step');
+            processSteps.forEach(step => {
+                step.addEventListener('mouseenter', () => {
+                    step.style.transform = 'translateY(-3px)';
+                    step.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.1)';
+                });
+                step.addEventListener('mouseleave', () => {
+                    step.style.transform = '';
+                    step.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
